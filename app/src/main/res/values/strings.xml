@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LivongoDemo</string>
+    <string name="refresh">refresh</string>
+    <string name="order">order</string>
+    <string name="user_denied_message">We need to access your step data from GoogleFit</string>
+    <string name="ok">Retry</string>
+</resources>
