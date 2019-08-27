@@ -32,8 +32,12 @@ class MainViewModel : BaseViewModel<MainViewState>(), LifecycleObserver, Permiss
         updateState { it.copy(event=MainViewEvent.PermissionDenied(R.string.user_denied_message)) }
     }
 
-    fun getStepsCountForTwoWeeks(reverse:Boolean){
-        updateState { it.copy(stepDataList = mDataRepository.getStepsCountForTwoWeeks(stepsData,reverse)) }
+    fun getStepsCountForTwoWeeks(){
+        var state:Boolean = false
+        if(stepsData.value != null){
+            state = stepsData.value!!.reverse
+        }
+        updateState { it.copy(stepDataList = mDataRepository.getStepsCountForTwoWeeks(stepsData,state)) }
     }
 
     fun showChronoStepsData() {

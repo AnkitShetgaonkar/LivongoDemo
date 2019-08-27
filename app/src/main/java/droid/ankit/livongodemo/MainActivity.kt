@@ -57,7 +57,7 @@ class MainActivity : BaseActivity(), PermissionCallback {
         }
 
         lifecycle.addObserver(viewModel)
-        refreshBtn.setOnClickListener { viewModel.getStepsCountForTwoWeeks(switch.isChecked) }
+        refreshBtn.setOnClickListener { viewModel.getStepsCountForTwoWeeks() }
         switch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 viewModel.showReverseChronoStepsData()
@@ -86,7 +86,7 @@ class MainActivity : BaseActivity(), PermissionCallback {
     private fun handleScreenEvent(event: MainViewEvent): Boolean {
         return when(event) {
             is MainViewEvent.PermissionGranted->{
-                viewModel.getStepsCountForTwoWeeks(switch.isChecked)
+                viewModel.getStepsCountForTwoWeeks()
                 true
             }
 
