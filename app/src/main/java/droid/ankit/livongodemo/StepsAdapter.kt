@@ -1,5 +1,6 @@
 package droid.ankit.livongodemo
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,7 @@ class StepsAdapter:RecyclerView.Adapter<StepsViewHolder>(){
         holder.stepsTxt.text = items[position].steps.toString()
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.CEILING
-        val percent = items[position].steps/totalSteps*100
+        val percent = (items[position].steps*1.0f)/totalSteps*100f
         holder.worthTxt.text =
             String.format(holder.worthTxt.context.resources.getString(R.string.percent_worth),df.format(percent))
     }

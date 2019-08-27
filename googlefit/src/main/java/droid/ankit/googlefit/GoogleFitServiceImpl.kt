@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.fitness.Fitness
 import com.google.android.gms.fitness.data.DataSet
+import com.google.android.gms.fitness.data.DataSource
 import com.google.android.gms.fitness.data.DataType
 import com.google.android.gms.fitness.request.DataReadRequest
 import com.google.android.gms.fitness.result.DataReadResponse
@@ -16,6 +17,11 @@ import java.text.DateFormat.getDateInstance
 import java.text.DateFormat.getTimeInstance
 import java.util.*
 import java.util.concurrent.TimeUnit
+import com.google.android.gms.fitness.data.DataSource.TYPE_DERIVED
+
+
+
+
 
 
 
@@ -28,16 +34,28 @@ class GoogleFitServiceImpl(private val context: Context) {
         val cal = Calendar.getInstance()
         val now = Date()
         cal.time = now
+        cal.set(Calendar.HOUR_OF_DAY, 23)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
         val endTime = cal.timeInMillis
         cal.add(Calendar.WEEK_OF_YEAR, -2)
+        cal.set(Calendar.HOUR_OF_DAY, 0)
         val startTime = cal.timeInMillis
 
         val dateFormat = getDateInstance()
         Log.i(TAG, "Range Start: " + dateFormat.format(startTime))
         Log.i(TAG, "Range End: " + dateFormat.format(endTime))
 
+        val ESTIMATED_STEP_DELTAS = DataSource.Builder()
+            .setDataType(DataType.TYPE_STEP_COUNT_DELTA)
+            .setType(DataSource.TYPE_DERIVED)
+            .setStreamName("estimated_steps")
+            .setAppPackageName("com.google.android.gms")
+            .build()
+
         val readRequest = DataReadRequest.Builder()
-            .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
+            .aggregate(ESTIMATED_STEP_DELTAS, DataType.AGGREGATE_STEP_COUNT_DELTA)
             .bucketByTime(1, TimeUnit.DAYS)
             .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
             .build()
@@ -61,8 +79,8 @@ class GoogleFitServiceImpl(private val context: Context) {
                     continue
                 }
                 // keep adding a day
-                cal.add(Calendar.DAY_OF_MONTH, 1)
                 val stepsData:StepsData = getStepData(dataSets,cal.timeInMillis)
+                cal.add(Calendar.DAY_OF_MONTH, 1)
                 totalSteps += stepsData.steps
                 stepsDataList.add(stepsData)
             }
