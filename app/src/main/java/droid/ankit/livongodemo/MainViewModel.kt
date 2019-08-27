@@ -33,7 +33,7 @@ class MainViewModel : BaseViewModel<MainViewState>(), LifecycleObserver, Permiss
     }
 
     fun getStepsCountForTwoWeeks(){
-        var state:Boolean = false
+        var state = false
         if(stepsData.value != null){
             state = stepsData.value!!.reverse
         }
@@ -41,6 +41,9 @@ class MainViewModel : BaseViewModel<MainViewState>(), LifecycleObserver, Permiss
     }
 
     fun showChronoStepsData() {
+        if(stepsData.value == null){
+            return
+        }
         if(!stepsData.value!!.reverse){
             return
         }
@@ -48,6 +51,9 @@ class MainViewModel : BaseViewModel<MainViewState>(), LifecycleObserver, Permiss
     }
 
     fun showReverseChronoStepsData() {
+        if(stepsData.value == null){
+            return
+        }
         if(stepsData.value!!.reverse){
             return
         }
