@@ -19,7 +19,7 @@ Extra Features
 5. Refresh button to refetch new data if any
 
 Instructions
-1. Will need to setup the project in Google developer console, with the SSH key and package name for the build to work
+1. Will need to setup the project in Google developer console, with the SHA key and package name for the build to work
     1. Create the project, and enable Google Fit API.
     2. Under Google Fit API select the user steps data read access.
     3. Use the package name of the project and your ssh key to setup the Android key.
