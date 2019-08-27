@@ -3,7 +3,6 @@ package droid.ankit.livongodemo
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Switch
@@ -48,9 +47,6 @@ class MainActivity : BaseActivity(), PermissionCallback {
 
         viewModel.observeState(this){
             it.event?.peek { event-> handleScreenEvent(event) }
-            it.fetchingFromNetwork?.observe(this, Observer { isFetching->
-                showLoader(isFetching)
-            })
             it.stepDataList?.observe(this, Observer {stepsDataResponse->
                 populateStepsData(stepsDataResponse)
             })
@@ -72,16 +68,6 @@ class MainActivity : BaseActivity(), PermissionCallback {
         adapter.setData(stepsDataResponse.stepsData,stepsDataResponse.totalSteps)
     }
 
-    private fun showLoader(isFetching:Boolean) {
-        Log.d(TAG,"is fetching points from google fit")
-        if(isFetching){
-            progressBar.visibility = View.VISIBLE
-            refreshBtn.visibility = View.INVISIBLE
-        }else{
-            progressBar.visibility = View.INVISIBLE
-            refreshBtn.visibility = View.VISIBLE
-        }
-    }
 
     private fun handleScreenEvent(event: MainViewEvent): Boolean {
         return when(event) {

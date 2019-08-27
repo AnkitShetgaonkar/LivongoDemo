@@ -24,7 +24,7 @@ class GoogleFitServiceImpl(private val context: Context) {
 
     private val TAG = GoogleFitServiceImpl::class.java.simpleName
 
-    suspend fun getStepsCountForTwoWeeks(reverse:Boolean): StepsDataResponse {
+    fun getStepsCountForTwoWeeks(reverse:Boolean): StepsDataResponse {
         val cal = Calendar.getInstance()
         val now = Date()
         cal.time = now

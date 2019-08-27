@@ -3,12 +3,10 @@ package droid.ankit.livongodemo
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import droid.ankit.googlefit.StepsData
 import kotlinx.android.synthetic.main.steps_item.view.*
 import java.math.RoundingMode
-import java.text.DateFormat
 import java.text.DateFormat.getDateInstance
 import java.text.DecimalFormat
 
