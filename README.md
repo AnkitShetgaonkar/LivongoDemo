@@ -3,7 +3,7 @@
 2. Tried to show my skills writing modular code, with loose coupling with the new MVVM architecture.
 
 Architecture
-1. Used MVVM+RepositoryPattern+Coroutines+LiveData+Koin
+1. Used Kotlin+MVVM+RepositoryPattern+Coroutines+LiveData+Koin
 2. Repository pattern: Abstracts the data source from ViewModel
 3. The View is hidden from all the business logic.
 4. Used Koin, lightweight dependency injection
