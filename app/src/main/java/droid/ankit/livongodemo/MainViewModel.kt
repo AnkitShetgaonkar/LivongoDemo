@@ -2,9 +2,10 @@ package droid.ankit.livongodemo
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.etiennelenhart.eiffel.state.ViewEvent
 import com.etiennelenhart.eiffel.state.ViewState
-import droid.ankit.googlefit.StepsData
+import droid.ankit.googlefit.StepsDataResponse
 import droid.ankit.livongodemo.base.BaseActivity
 import droid.ankit.livongodemo.base.BaseViewModel
 import droid.ankit.livongodemo.util.PermissionCallback
@@ -13,7 +14,7 @@ import org.koin.standalone.inject
 class MainViewModel : BaseViewModel<MainViewState>(), LifecycleObserver, PermissionCallback {
 
     private val mDataRepository:DataRepository by inject()
-
+    private val stepsData:MutableLiveData<StepsDataResponse> = MutableLiveData()
     init {
         state.value = MainViewState()
     }
@@ -31,8 +32,22 @@ class MainViewModel : BaseViewModel<MainViewState>(), LifecycleObserver, Permiss
         updateState { it.copy(event=MainViewEvent.PermissionDenied(R.string.user_denied_message)) }
     }
 
-    fun getStepsCountForTwoWeeks(){
-        updateState { it.copy(stepDataList = mDataRepository.getStepsCountForTwoWeeks()) }
+    fun getStepsCountForTwoWeeks(reverse:Boolean){
+        updateState { it.copy(stepDataList = mDataRepository.getStepsCountForTwoWeeks(stepsData,reverse)) }
+    }
+
+    fun showChronoStepsData() {
+        if(!stepsData.value!!.reverse){
+            return
+        }
+        stepsData.postValue(StepsDataResponse(stepsData.value!!.totalSteps,stepsData.value!!.stepsData.reversed(),false))
+    }
+
+    fun showReverseChronoStepsData() {
+        if(stepsData.value!!.reverse){
+            return
+        }
+        stepsData.postValue(StepsDataResponse(stepsData.value!!.totalSteps,stepsData.value!!.stepsData.reversed(),true))
     }
 
 }
@@ -42,6 +57,6 @@ sealed class MainViewEvent: ViewEvent(){
     class PermissionGranted:MainViewEvent()
 }
 
-data class MainViewState(val stepDataList :LiveData<List<StepsData>>?=null,
+data class MainViewState(val stepDataList :LiveData<StepsDataResponse>?=null,
                          val fetchingFromNetwork: LiveData<Boolean>?=null,
                          val event:MainViewEvent?=null): ViewState

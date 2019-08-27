@@ -1,6 +1,7 @@
 package droid.ankit.livongodemo
 
 import android.app.Application
+import droid.ankit.googlefit.GoogleFitServiceImpl
 import droid.ankit.livongodemo.util.PermissionManager
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.Module
@@ -14,7 +15,7 @@ class LivongoApp:Application() {
 }
 
 val appModule: Module = module {
-    //single { DataRepository() }
-    //single { GoogleFitServiceImpl()}
+    single { DataRepository() }
+    single { GoogleFitServiceImpl(get()) }
     single { PermissionManager(get()) }
 }

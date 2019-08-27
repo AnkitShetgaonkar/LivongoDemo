@@ -4,4 +4,6 @@
     <string name="order">order</string>
     <string name="user_denied_message">We need to access your step data from GoogleFit</string>
     <string name="ok">Retry</string>
+    <string name="total_steps">Total Steps: %1$s!</string>
+    <string name="percent_worth">Worth of total steps: %1$s \%%</string>
 </resources>
