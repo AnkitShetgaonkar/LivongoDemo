@@ -53,7 +53,9 @@ class MainActivity : BaseActivity(), PermissionCallback {
         }
 
         lifecycle.addObserver(viewModel)
-        refreshBtn.setOnClickListener { viewModel.getStepsCountForTwoWeeks() }
+        refreshBtn.setOnClickListener {
+            if(permissionManager.isPermissionGranted())
+                viewModel.getStepsCountForTwoWeeks() }
         switch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 viewModel.showReverseChronoStepsData()

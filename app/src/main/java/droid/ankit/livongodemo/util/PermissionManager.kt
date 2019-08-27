@@ -38,6 +38,15 @@ class PermissionManager(private val context:Context) {
         }
     }
 
+    fun isPermissionGranted():Boolean {
+        val fitnessOptions = FitnessOptions.builder()
+            .addDataType(DataType.TYPE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_READ)
+            .addDataType(DataType.AGGREGATE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_READ)
+            .build()
+
+        return GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(context), fitnessOptions)
+    }
+
     companion object {
         private const val GOOGLE_FIT_PERMISSIONS_REQUEST_CODE = 1001
     }
