@@ -17,3 +17,10 @@ Extra Features
 3. If User denies to give permission to access the google fit data, then a snackbar is persistantly shown to reattempt.
 4. Used constraint layout, and card view as item of recycler view
 5. Refresh button to refetch new data if any
+
+Instructions
+1. Will need to setup the project in Google developer console, with the SSH key and package name for the build to work
+    1. Create the project, and enable Google Fit API.
+    2. Under Google Fit API select the user steps data read access.
+    3. Use the package name of the project and your ssh key to setup the Android key.
+2. Should have some data associated with the user in the Google Fit cloud.
